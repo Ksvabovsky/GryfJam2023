@@ -28,7 +28,7 @@ public class GhostController : MonoBehaviour
 
         actions = new GhostInputActions();
 
-        actions.Ghost.Enable();
+        actions.Player.Enable();
         //pl.actions[actions.Ghost.Jump.name].performed += Jump;
         //pl.actions[actions.Ghost.Dodge.name].performed += Dodge;
 
@@ -39,7 +39,7 @@ public class GhostController : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        Vector2 joy = pl.actions[actions.Ghost.Move.name].ReadValue<Vector2>();
+        Vector2 joy = pl.actions[actions.Player.Move.name].ReadValue<Vector2>();
 
         GhostTarget.transform.position = this.transform.position + new Vector3(joy.x * 2, joy.y * 2);
 

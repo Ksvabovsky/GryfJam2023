@@ -24,7 +24,7 @@ public partial class @GhostInputActions: IInputActionCollection2, IDisposable
     ""name"": ""GhostInputActions"",
     ""maps"": [
         {
-            ""name"": ""Ghost"",
+            ""name"": ""Player"",
             ""id"": ""618a14be-f731-43e3-b939-54077ad737ee"",
             ""actions"": [
                 {
@@ -35,6 +35,33 @@ public partial class @GhostInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Shoot"",
+                    ""type"": ""Button"",
+                    ""id"": ""5407e262-6dd8-4441-ab9b-4756341e3393"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Shield"",
+                    ""type"": ""Button"",
+                    ""id"": ""c49d9513-ca63-415d-8835-b58ff7bd127a"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Enter"",
+                    ""type"": ""Button"",
+                    ""id"": ""45fb2bda-8603-4a9a-a744-94a1cd449646"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -46,6 +73,39 @@ public partial class @GhostInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": ""Ghost"",
                     ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""be412d7f-b09d-46f8-924c-ed5c9ecc0d6b"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Shoot"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5487af85-e85b-41ec-b832-f5257496f9e3"",
+                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Shield"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""1b7a7a0c-9582-47e4-b810-d6566b536f88"",
+                    ""path"": ""<Gamepad>/start"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Enter"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -66,9 +126,12 @@ public partial class @GhostInputActions: IInputActionCollection2, IDisposable
         }
     ]
 }");
-        // Ghost
-        m_Ghost = asset.FindActionMap("Ghost", throwIfNotFound: true);
-        m_Ghost_Move = m_Ghost.FindAction("Move", throwIfNotFound: true);
+        // Player
+        m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
+        m_Player_Move = m_Player.FindAction("Move", throwIfNotFound: true);
+        m_Player_Shoot = m_Player.FindAction("Shoot", throwIfNotFound: true);
+        m_Player_Shield = m_Player.FindAction("Shield", throwIfNotFound: true);
+        m_Player_Enter = m_Player.FindAction("Enter", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -127,51 +190,75 @@ public partial class @GhostInputActions: IInputActionCollection2, IDisposable
         return asset.FindBinding(bindingMask, out action);
     }
 
-    // Ghost
-    private readonly InputActionMap m_Ghost;
-    private List<IGhostActions> m_GhostActionsCallbackInterfaces = new List<IGhostActions>();
-    private readonly InputAction m_Ghost_Move;
-    public struct GhostActions
+    // Player
+    private readonly InputActionMap m_Player;
+    private List<IPlayerActions> m_PlayerActionsCallbackInterfaces = new List<IPlayerActions>();
+    private readonly InputAction m_Player_Move;
+    private readonly InputAction m_Player_Shoot;
+    private readonly InputAction m_Player_Shield;
+    private readonly InputAction m_Player_Enter;
+    public struct PlayerActions
     {
         private @GhostInputActions m_Wrapper;
-        public GhostActions(@GhostInputActions wrapper) { m_Wrapper = wrapper; }
-        public InputAction @Move => m_Wrapper.m_Ghost_Move;
-        public InputActionMap Get() { return m_Wrapper.m_Ghost; }
+        public PlayerActions(@GhostInputActions wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Move => m_Wrapper.m_Player_Move;
+        public InputAction @Shoot => m_Wrapper.m_Player_Shoot;
+        public InputAction @Shield => m_Wrapper.m_Player_Shield;
+        public InputAction @Enter => m_Wrapper.m_Player_Enter;
+        public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
         public bool enabled => Get().enabled;
-        public static implicit operator InputActionMap(GhostActions set) { return set.Get(); }
-        public void AddCallbacks(IGhostActions instance)
+        public static implicit operator InputActionMap(PlayerActions set) { return set.Get(); }
+        public void AddCallbacks(IPlayerActions instance)
         {
-            if (instance == null || m_Wrapper.m_GhostActionsCallbackInterfaces.Contains(instance)) return;
-            m_Wrapper.m_GhostActionsCallbackInterfaces.Add(instance);
+            if (instance == null || m_Wrapper.m_PlayerActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_PlayerActionsCallbackInterfaces.Add(instance);
             @Move.started += instance.OnMove;
             @Move.performed += instance.OnMove;
             @Move.canceled += instance.OnMove;
+            @Shoot.started += instance.OnShoot;
+            @Shoot.performed += instance.OnShoot;
+            @Shoot.canceled += instance.OnShoot;
+            @Shield.started += instance.OnShield;
+            @Shield.performed += instance.OnShield;
+            @Shield.canceled += instance.OnShield;
+            @Enter.started += instance.OnEnter;
+            @Enter.performed += instance.OnEnter;
+            @Enter.canceled += instance.OnEnter;
         }
 
-        private void UnregisterCallbacks(IGhostActions instance)
+        private void UnregisterCallbacks(IPlayerActions instance)
         {
             @Move.started -= instance.OnMove;
             @Move.performed -= instance.OnMove;
             @Move.canceled -= instance.OnMove;
+            @Shoot.started -= instance.OnShoot;
+            @Shoot.performed -= instance.OnShoot;
+            @Shoot.canceled -= instance.OnShoot;
+            @Shield.started -= instance.OnShield;
+            @Shield.performed -= instance.OnShield;
+            @Shield.canceled -= instance.OnShield;
+            @Enter.started -= instance.OnEnter;
+            @Enter.performed -= instance.OnEnter;
+            @Enter.canceled -= instance.OnEnter;
         }
 
-        public void RemoveCallbacks(IGhostActions instance)
+        public void RemoveCallbacks(IPlayerActions instance)
         {
-            if (m_Wrapper.m_GhostActionsCallbackInterfaces.Remove(instance))
+            if (m_Wrapper.m_PlayerActionsCallbackInterfaces.Remove(instance))
                 UnregisterCallbacks(instance);
         }
 
-        public void SetCallbacks(IGhostActions instance)
+        public void SetCallbacks(IPlayerActions instance)
         {
-            foreach (var item in m_Wrapper.m_GhostActionsCallbackInterfaces)
+            foreach (var item in m_Wrapper.m_PlayerActionsCallbackInterfaces)
                 UnregisterCallbacks(item);
-            m_Wrapper.m_GhostActionsCallbackInterfaces.Clear();
+            m_Wrapper.m_PlayerActionsCallbackInterfaces.Clear();
             AddCallbacks(instance);
         }
     }
-    public GhostActions @Ghost => new GhostActions(this);
+    public PlayerActions @Player => new PlayerActions(this);
     private int m_GhostSchemeIndex = -1;
     public InputControlScheme GhostScheme
     {
@@ -181,8 +268,11 @@ public partial class @GhostInputActions: IInputActionCollection2, IDisposable
             return asset.controlSchemes[m_GhostSchemeIndex];
         }
     }
-    public interface IGhostActions
+    public interface IPlayerActions
     {
         void OnMove(InputAction.CallbackContext context);
+        void OnShoot(InputAction.CallbackContext context);
+        void OnShield(InputAction.CallbackContext context);
+        void OnEnter(InputAction.CallbackContext context);
     }
 }
