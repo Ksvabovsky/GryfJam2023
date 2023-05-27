@@ -18,6 +18,8 @@ public class PlayerMovement : MonoBehaviour
     Animator animator;
 
     Rigidbody rb;
+    Collider playerCollider;
+
     [SerializeField]
     float GroundSpeed;
     [SerializeField]
@@ -25,11 +27,14 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField]
     float JumpForce;
     [SerializeField]
+    float DodgeTime;
+    [SerializeField]
     float HorMovement;
     [SerializeField]
 
     int jumps;
     bool isJumping;
+    bool canDodge;
 
     Vector3 velocity = Vector3.zero;
 
@@ -44,6 +49,7 @@ public class PlayerMovement : MonoBehaviour
         actions = new PlayerInputActions();
         actions.Player.Enable();
         actions.Player.Jump.performed += Jump;
+        actions.Player.Dodge.performed += Dodge;
 
         jumps = 3;
         isJumping = true;
@@ -113,6 +119,28 @@ public class PlayerMovement : MonoBehaviour
                 jumps--;
             }
         }
+    }
+
+    public void Dodge(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            if (canDodge)
+            {
+                IEnumerator coroutine = Dodging(DodgeTime);
+                StartCoroutine(coroutine);
+            }
+        }
+    }
+
+    private IEnumerator Dodging(float time)
+    {
+        canDodge = false;
+        playerCollider.enabled = false;
+        animator.Play("Dodge");
+        yield return new WaitForSeconds(time);
+        playerCollider.enabled = true;
+        canDodge = true;
     }
 
     private void OnCollisionEnter(Collision collision)
