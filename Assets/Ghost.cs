@@ -16,5 +16,8 @@ public class Ghost : MonoBehaviour
     void FixedUpdate()
     {
         this.transform.position = Vector3.Slerp(this.transform.position,Target.position,2f*Time.deltaTime);
+        
+    
+    
     }
 }
