@@ -1,0 +1,46 @@
+{
+    "name": "GhostInputActions",
+    "maps": [
+        {
+            "name": "Ghost",
+            "id": "618a14be-f731-43e3-b939-54077ad737ee",
+            "actions": [
+                {
+                    "name": "Move",
+                    "type": "Value",
+                    "id": "c4507f9e-f0e2-43b9-ba5d-5a8eb026ee65",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "2e3c8dc3-dd36-41cd-8193-80aa6dea2156",
+                    "path": "<Gamepad>/leftStick",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Ghost",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": [
+        {
+            "name": "Ghost",
+            "bindingGroup": "Ghost",
+            "devices": [
+                {
+                    "devicePath": "<XInputController>",
+                    "isOptional": false,
+                    "isOR": false
+                }
+            ]
+        }
+    ]
+}

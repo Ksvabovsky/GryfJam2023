@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(Collider))]
-public class PlayerMovement : MonoBehaviour
+public class WizardController : MonoBehaviour
 {
     PlayerInput pl;
     PlayerInputActions actions;
@@ -19,6 +19,9 @@ public class PlayerMovement : MonoBehaviour
 
     Rigidbody rb;
     Collider playerCollider;
+
+    [SerializeField]
+    InputAction actionReference;
 
     [SerializeField]
     float GroundSpeed;
@@ -47,12 +50,15 @@ public class PlayerMovement : MonoBehaviour
         pl = GetComponent<PlayerInput>();
 
         actions = new PlayerInputActions();
+        
         actions.Player.Enable();
-        actions.Player.Jump.performed += Jump;
-        actions.Player.Dodge.performed += Dodge;
+        pl.actions[actions.Player.Jump.name].performed += Jump;
+        pl.actions[actions.Player.Dodge.name].performed += Dodge;
 
         jumps = 3;
         isJumping = true;
+
+
     }
 
     // Update is called once per frame
@@ -63,7 +69,7 @@ public class PlayerMovement : MonoBehaviour
         animator.SetFloat("Speed",Mathf.Abs(rb.velocity.x));
         animator.SetBool("isJumping", isJumping);
 
-        Vector2 joy = actions.Player.Move.ReadValue<Vector2>();
+        Vector2 joy = pl.actions[actions.Player.Move.name].ReadValue<Vector2>();
         HorMovement = joy.x;
         Debug.Log("X: " + joy.x);
         if (joy.x < -0.05)
@@ -114,7 +120,7 @@ public class PlayerMovement : MonoBehaviour
                     //rb.velocity = Vector3.SmoothDamp(rb.velocity, new Vector3(AirSpeed * joy.x * Time.deltaTime, 10f, 0f), ref velocity, 1f);
                     rb.AddForce(AirSpeed * joy.x * Time.deltaTime, JumpForce, 0f, ForceMode.Impulse);
                 }
-                Debug.Log("chuj");
+                Debug.Log("k");
                 isJumping = true;
                 jumps--;
             }
