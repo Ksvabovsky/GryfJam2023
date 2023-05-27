@@ -14,6 +14,9 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField]
     SpriteRenderer PlayerSprite;
 
+    [SerializeField]
+    Animator animator;
+
     Rigidbody rb;
     [SerializeField]
     float GroundSpeed;
@@ -24,6 +27,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField]
     float HorMovement;
     [SerializeField]
+
     int jumps;
     bool isJumping;
 
@@ -50,6 +54,8 @@ public class PlayerMovement : MonoBehaviour
     {
         Debug.Log("X vel: " + rb.velocity.x);
 
+        animator.SetFloat("Speed",Mathf.Abs(rb.velocity.x));
+        animator.SetBool("isJumping", isJumping);
 
         Vector2 joy = actions.Player.Move.ReadValue<Vector2>();
         HorMovement = joy.x;

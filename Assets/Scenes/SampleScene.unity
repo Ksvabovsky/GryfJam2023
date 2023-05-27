@@ -510,6 +510,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PlayerSprite: {fileID: 1806177301}
+  animator: {fileID: 1806177302}
   GroundSpeed: 10
   AirSpeed: 5
   JumpForce: 12
@@ -677,7 +678,7 @@ GameObject:
   - component: {fileID: 1806177301}
   - component: {fileID: 1806177302}
   m_Layer: 0
-  m_Name: Sprite
+  m_Name: PlayerSprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
