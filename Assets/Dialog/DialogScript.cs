@@ -140,7 +140,11 @@ public class DialogScript : MonoBehaviour
 
         if (shouldPlay && !isPlaying)
         {
+<<<<<<< Updated upstream
             PlayAudioClip(currDialog[i].actor.SFXTag);
+=======
+            PlayAudioClip(i);
+>>>>>>> Stashed changes
             shouldPlay = false;
         }
     }
@@ -148,9 +152,16 @@ public class DialogScript : MonoBehaviour
 
     void PlayAudioClip(int i)
     {
+<<<<<<< Updated upstream
         isPlaying = true;
         audioSource.clip = dialogAudios[i];
         audioSource.Play();
+=======
+       // isPlaying = true;
+        //audioSource.clip = dialogAudios[i];
+        
+        //audioSource.Play();
+>>>>>>> Stashed changes
     }
 
     void StopAudioClip()
