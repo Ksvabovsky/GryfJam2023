@@ -14,16 +14,16 @@ public class GhostController : MonoBehaviour
     [SerializeField]
     Animator animator;
 
-    Rigidbody rb;
     Collider playerCollider;
 
     [SerializeField]
     InputAction actionReference;
 
+    public Transform GhostTarget;
+
     // Start is called before the first frame update
     void Awake()
     {
-        rb = GetComponent<Rigidbody>();
         pl = GetComponent<PlayerInput>();
 
         actions = new GhostInputActions();
@@ -40,6 +40,9 @@ public class GhostController : MonoBehaviour
     void FixedUpdate()
     {
         Vector2 joy = pl.actions[actions.Ghost.Move.name].ReadValue<Vector2>();
+
+        GhostTarget.transform.position = this.transform.position + new Vector3(joy.x * 2, joy.y * 2);
+
         if (joy.x < -0.05)
         {
             PlayerSprite.flipX = true;
@@ -48,7 +51,7 @@ public class GhostController : MonoBehaviour
         {
             PlayerSprite.flipX = false;
         }
-        this.transform.Translate(joy.x * Time.deltaTime, joy.y *Time.deltaTime, 0f);
+        //this.transform.Translate(joy.x * Time.deltaTime, joy.y *Time.deltaTime, 0f);
     }
 
     public void Jump(InputAction.CallbackContext context)

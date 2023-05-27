@@ -18,8 +18,9 @@ public class WizardController : MonoBehaviour
     Animator animator;
 
     Rigidbody rb;
-    Collider playerCollider;
+    CapsuleCollider playerCollider;
 
+    
     [SerializeField]
     InputAction actionReference;
 
@@ -48,6 +49,7 @@ public class WizardController : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         pl = GetComponent<PlayerInput>();
+        playerCollider = GetComponent<CapsuleCollider>();
 
         actions = new PlayerInputActions();
         
@@ -57,7 +59,7 @@ public class WizardController : MonoBehaviour
 
         jumps = 3;
         isJumping = true;
-
+        canDodge = true;
 
     }
 
@@ -68,6 +70,7 @@ public class WizardController : MonoBehaviour
 
         animator.SetFloat("Speed",Mathf.Abs(rb.velocity.x));
         animator.SetBool("isJumping", isJumping);
+        animator.SetFloat("VertSpeed", rb.velocity.y);
 
         Vector2 joy = pl.actions[actions.Player.Move.name].ReadValue<Vector2>();
         HorMovement = joy.x;
@@ -131,6 +134,7 @@ public class WizardController : MonoBehaviour
     {
         if (context.performed)
         {
+            Debug.Log("chuj");
             if (canDodge)
             {
                 IEnumerator coroutine = Dodging(DodgeTime);
@@ -143,7 +147,7 @@ public class WizardController : MonoBehaviour
     {
         canDodge = false;
         playerCollider.enabled = false;
-        animator.Play("Dodge");
+        animator.Play("PlayerDodge");
         yield return new WaitForSeconds(time);
         playerCollider.enabled = true;
         canDodge = true;
