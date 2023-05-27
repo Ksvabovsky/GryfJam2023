@@ -11,11 +11,16 @@ public class PlayerMovement : MonoBehaviour
     PlayerInput pl;
     PlayerInputActions actions;
 
+    [SerializeField]
+    SpriteRenderer PlayerSprite;
+
     Rigidbody rb;
     [SerializeField]
     float GroundSpeed;
     [SerializeField]
     float AirSpeed;
+    [SerializeField]
+    float JumpForce;
     [SerializeField]
     float HorMovement;
     [SerializeField]
@@ -49,6 +54,14 @@ public class PlayerMovement : MonoBehaviour
         Vector2 joy = actions.Player.Move.ReadValue<Vector2>();
         HorMovement = joy.x;
         Debug.Log("X: " + joy.x);
+        if (joy.x < -0.05)
+        {
+            PlayerSprite.flipX= true;
+        }
+        if (joy.x > 0.05)
+        {
+            PlayerSprite.flipX= false;
+        }
         if (joy.x > deadzone || joy.x < -deadzone)
         {
             if (isJumping == false)
@@ -82,12 +95,12 @@ public class PlayerMovement : MonoBehaviour
                 if (isJumping == false)
                 {
                     //rb.velocity = Vector3.SmoothDamp(rb.velocity, new Vector3(GroundSpeed * joy.x * Time.deltaTime, 10f, 0f), ref velocity, 1f);
-                    rb.AddForce(GroundSpeed * joy.x * Time.deltaTime, 10f,0f, ForceMode.Impulse);
+                    rb.AddForce(GroundSpeed * joy.x * Time.deltaTime, JumpForce,0f, ForceMode.Impulse);
                 }
                 else
                 {
                     //rb.velocity = Vector3.SmoothDamp(rb.velocity, new Vector3(AirSpeed * joy.x * Time.deltaTime, 10f, 0f), ref velocity, 1f);
-                    rb.AddForce(AirSpeed * joy.x * Time.deltaTime, 10f, 0f, ForceMode.Impulse);
+                    rb.AddForce(AirSpeed * joy.x * Time.deltaTime, JumpForce, 0f, ForceMode.Impulse);
                 }
                 Debug.Log("chuj");
                 isJumping = true;
