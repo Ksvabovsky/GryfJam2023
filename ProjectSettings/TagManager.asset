@@ -5,6 +5,10 @@ TagManager:
   serializedVersion: 2
   tags:
   - Ground
+  - STparalax
+  - 2nd paralax
+  - 3rd paralax
+  - kolce
   layers:
   - Default
   - TransparentFX

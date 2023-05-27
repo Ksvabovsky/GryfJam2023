@@ -160,10 +160,25 @@ public class WizardController : MonoBehaviour
             isJumping = false;
             ResetJumps();
         }
+        else if(collision.gameObject.CompareTag("kolce"))
+        {
+            //tu giniemy
+            Debug.Log("Ded");
+        }
+    }
+
+    private void OnCollisionStay(Collision collision)
+    {
+        if(collision.gameObject.CompareTag("kolce"))
+        {
+            //tu giniemy
+            Debug.Log("Ded");
+        }
     }
 
     public void ResetJumps()
     {
         jumps = 3;
     }
+
 }
