@@ -20,6 +20,7 @@ public class GhostController : MonoBehaviour
     InputAction actionReference;
 
     public Transform GhostTarget;
+    public Ghost gh;
 
     // Start is called before the first frame update
     void Awake()
@@ -29,7 +30,7 @@ public class GhostController : MonoBehaviour
         actions = new GhostInputActions();
 
         actions.Player.Enable();
-        //pl.actions[actions.Ghost.Jump.name].performed += Jump;
+        pl.actions[actions.Player.Shoot.name].performed += Shoot;
         //pl.actions[actions.Ghost.Dodge.name].performed += Dodge;
 
 
@@ -54,12 +55,13 @@ public class GhostController : MonoBehaviour
         //this.transform.Translate(joy.x * Time.deltaTime, joy.y *Time.deltaTime, 0f);
     }
 
-    public void Jump(InputAction.CallbackContext context)
+    public void Shoot(InputAction.CallbackContext context)
     {
 
         if (context.performed)
         {
-
+            Vector2 joy = pl.actions[actions.Player.Aim.name].ReadValue<Vector2>();
+            gh.Shoot(joy.x,joy.y);
         }
     }
 

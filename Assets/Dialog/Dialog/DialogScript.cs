@@ -62,28 +62,30 @@ public class DialogScript : MonoBehaviour
         
         if (readyDialog)
         {
-            
-            if (Input.GetKeyDown(KeyCode.F) && iteration < currDialog.Count)
+
+            if (Input.GetKeyDown(KeyCode.F))
             {
-                if (!isPlaying)
+                if (iteration < currDialog.Count)
                 {
-                    shouldPlay = true;
+                    if (!isPlaying)
+                    {
+                        shouldPlay = true;
+                    }
+                    else
+                    {
+                        StopAudioClip();
+                        shouldPlay = true;
+                    }
+                    InitCurrLine(iteration);
                 }
-                else
-                {
-                    StopAudioClip();
-                    shouldPlay = true;
-                }
-                InitCurrLine(iteration);
-                iteration++;
-            }
-            else
-            {
-                if(iteration == 34)
+                else if (iteration >= 35)
                 {
                     SceneManager.LoadScene("SampleScene");
                 }
+
+                iteration++;
             }
+
         }
     }
 

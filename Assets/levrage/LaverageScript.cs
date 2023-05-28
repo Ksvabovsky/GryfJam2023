@@ -28,11 +28,16 @@ public class LaverageScript : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.tag == "bullet")
+        if(other.tag == "Bullet")
         {
             Destroy(other.gameObject);
             isOn = true;
         }
+    }
+
+    public void Enable()
+    {
+        isOn = true;
     }
 
 }
