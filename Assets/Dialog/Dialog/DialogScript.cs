@@ -12,6 +12,7 @@ public class DialogScript : MonoBehaviour
     private List<DialogLine> currDialog;
     private bool readyDialog;
     public int iteration;
+    public int sfxIteration;
 
     public GameObject laser;
 
@@ -43,6 +44,7 @@ public class DialogScript : MonoBehaviour
         shouldPlay = false;
         isPlaying = false;
         iteration = 0;
+        sfxIteration = 0;
         audioSource = GetComponent<AudioSource>();
         InitDialog(DialogContainer.dialogTag);
         laser.SetActive(false);
@@ -88,7 +90,6 @@ public class DialogScript : MonoBehaviour
             
             currDialog = allDialogLines[i - 1];
             
-            //Debug.Log(currDialog.Count);
             readyDialog = true;
         }
 
@@ -111,13 +112,20 @@ public class DialogScript : MonoBehaviour
             leftPor.text = currDialog[i].actor.name;
             leftPortrait.color = Color.white;
             leftPortrait.sprite = portraits[currDialog[i].actor.portraitTag];
-            audioSource.clip = dialogAudios[currDialog[i].actor.SFXTag];
 
             if (rightPortrait.sprite != null)
             {
                 rightPortrait.color = Color.grey;
             }
-        }else if(currDialog[i].actor.portraitTag == 2)
+            if (shouldPlay && !isPlaying)
+            {
+                Debug.Log("play auido:" + sfxIteration);
+                PlayAudioClip(sfxIteration);
+                shouldPlay = false;
+                sfxIteration++;
+            }
+        }
+        else if(currDialog[i].actor.portraitTag == 2)
         {
             laser.SetActive(true);
             panelText.text = currDialog[i].text;
@@ -130,38 +138,29 @@ public class DialogScript : MonoBehaviour
             rightPor.text = currDialog[i].actor.name;
             rightPortrait.color = Color.white;
             rightPortrait.sprite = portraits[currDialog[i].actor.portraitTag];
-            audioSource.clip = dialogAudios[currDialog[i].actor.SFXTag];
 
             if (leftPortrait.sprite != null)
             {
                 leftPortrait.color = Color.grey;           
             }
+            if (shouldPlay && !isPlaying)
+            {
+                Debug.Log("play auido:" + sfxIteration);
+                PlayAudioClip(sfxIteration);
+                shouldPlay = false;
+                sfxIteration++;
+            }
         }
 
-        if (shouldPlay && !isPlaying)
-        {
-<<<<<<< Updated upstream
-            PlayAudioClip(currDialog[i].actor.SFXTag);
-=======
-            PlayAudioClip(i);
->>>>>>> Stashed changes
-            shouldPlay = false;
-        }
+        
     }
 
 
     void PlayAudioClip(int i)
     {
-<<<<<<< Updated upstream
-        isPlaying = true;
         audioSource.clip = dialogAudios[i];
         audioSource.Play();
-=======
-       // isPlaying = true;
-        //audioSource.clip = dialogAudios[i];
-        
-        //audioSource.Play();
->>>>>>> Stashed changes
+        isPlaying = true;
     }
 
     void StopAudioClip()

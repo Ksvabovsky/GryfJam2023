@@ -49,8 +49,6 @@ public static class DialogContainer
         new DialogLine(actors[1], "Oh please!"),
         new DialogLine(actors[0], "Oh please go back where you came from! I have no need for such a useless wisp!\r\n"),
         new DialogLine(actors[1], "*GASP* You didn’t…\r\n"),
-        new DialogLine(actors[1], "Huh! Good luck with getting rid of me. \r\n"),
-        new DialogLine(actors[0], "Huh!?"),
         new DialogLine(actors[1], "Such powerful summoning spell can’t be undone so easily. You are bound with me for the rest of your life!\r\n"),
         new DialogLine(actors[0], "You mean… like in a committed relationship!?"),
         new DialogLine(actors[0], "NOOOOOO!"),
