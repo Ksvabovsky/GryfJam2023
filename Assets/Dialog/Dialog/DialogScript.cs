@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class DialogScript : MonoBehaviour
@@ -75,6 +76,13 @@ public class DialogScript : MonoBehaviour
                 }
                 InitCurrLine(iteration);
                 iteration++;
+            }
+            else
+            {
+                if(iteration == 34)
+                {
+                    SceneManager.LoadScene("SampleScene");
+                }
             }
         }
     }
