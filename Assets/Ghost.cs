@@ -7,6 +7,10 @@ public class Ghost : MonoBehaviour
     // Start is called before the first frame update
 
     public Transform Target;
+    public GameObject bullet;
+    public Transform aim;
+    public Transform aimDir;
+    public Transform bulletParent;
     void Start()
     {
         
@@ -19,5 +23,15 @@ public class Ghost : MonoBehaviour
         
     
     
+    }
+
+    public void Shoot(float x, float y)
+    {
+        
+        aim.position = this.transform.position + new Vector3(x * 2, y * 2);
+        aimDir.LookAt(aim.position);
+        GameObject proj = Instantiate(bullet, aimDir.position,aimDir.rotation,bulletParent);
+        Rigidbody rb = proj.GetComponent<Rigidbody>();
+        rb.AddRelativeForce(Vector3.forward * 10f,ForceMode.Impulse);
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class DialogScript : MonoBehaviour
@@ -61,21 +62,30 @@ public class DialogScript : MonoBehaviour
         
         if (readyDialog)
         {
-            
-            if (Input.GetKeyDown(KeyCode.F) && iteration < currDialog.Count)
+
+            if (Input.GetKeyDown(KeyCode.F))
             {
-                if (!isPlaying)
+                if (iteration < currDialog.Count)
                 {
-                    shouldPlay = true;
+                    if (!isPlaying)
+                    {
+                        shouldPlay = true;
+                    }
+                    else
+                    {
+                        StopAudioClip();
+                        shouldPlay = true;
+                    }
+                    InitCurrLine(iteration);
                 }
-                else
+                else if (iteration >= 35)
                 {
-                    StopAudioClip();
-                    shouldPlay = true;
+                    SceneManager.LoadScene("SampleScene");
                 }
-                InitCurrLine(iteration);
+
                 iteration++;
             }
+
         }
     }
 
