@@ -3,19 +3,7 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags:
-  - Ground
-<<<<<<< Updated upstream
-  - STparalax
-  - 2nd paralax
-  - 3rd paralax
-  - kolce
-=======
-  - 3rd paralax
-  - 2nd paralax
-  - STparalax
-  - bullet
->>>>>>> Stashed changes
+  tags: []
   layers:
   - Default
   - TransparentFX
