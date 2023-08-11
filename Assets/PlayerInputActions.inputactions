@@ -78,6 +78,17 @@
                 },
                 {
                     "name": "",
+                    "id": "5279309d-5567-40c5-bc2d-144078274832",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Dodge",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "253295aa-5822-4c88-953b-182325973746",
                     "path": "<Gamepad>/start",
                     "interactions": "",

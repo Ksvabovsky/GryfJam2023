@@ -21,6 +21,16 @@ public class Bullet : MonoBehaviour
         if (ls) { 
             ls.Enable();
         }
+        ChiScript cs = collision.gameObject.GetComponent<ChiScript>();
+        if (cs)
+        {
+            cs.sleep();
+        }
+        WizardController ws = collision.gameObject.GetComponent<WizardController>();
+        if(ws){
+            ws.gameover();
+        }
+
         Destroy(this.gameObject);
     }
 }

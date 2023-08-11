@@ -3,11 +3,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(Collider))]
 public class WizardController : MonoBehaviour
 {
+
+    public static GameObject Instance { get;private set; }
+
     PlayerInput pl;
     PlayerInputActions actions;
 
@@ -37,8 +41,11 @@ public class WizardController : MonoBehaviour
     [SerializeField]
 
     int jumps;
+    [SerializeField]
     bool isJumping;
     bool canDodge;
+
+    public GameObject screen;
 
     Vector3 velocity = Vector3.zero;
 
@@ -47,6 +54,8 @@ public class WizardController : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
+        Instance = this.gameObject;
+
         rb = GetComponent<Rigidbody>();
         pl = GetComponent<PlayerInput>();
         playerCollider = GetComponent<CapsuleCollider>();
@@ -87,7 +96,7 @@ public class WizardController : MonoBehaviour
         {
             if (isJumping == false)
             {
-                rb.AddForce(this.transform.right * GroundSpeed * joy.x * Time.deltaTime, ForceMode.Impulse);
+                rb.AddForce(this.transform.right * GroundSpeed * joy.x * Time.deltaTime, ForceMode.VelocityChange);
             }
             else
             {
@@ -181,4 +190,20 @@ public class WizardController : MonoBehaviour
         jumps = 3;
     }
 
+    public void gameover()
+    {
+        screen.SetActive(true);
+        IEnumerator coroutine = restart();
+        StartCoroutine(coroutine);
+        //Time.timeScale = 0f;
+        
+
+    }
+
+
+    private IEnumerator restart()
+    {
+        yield return new WaitForSeconds(3f);
+        SceneManager.LoadScene("SampleScene");
+    }
 }
